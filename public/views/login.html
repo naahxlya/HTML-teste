@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema - Login</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #334155;
+}
+
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: #3b82f6;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+.mensagem {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: red;
+}
+
+/* Tela de boas-vindas */
+.bem-vindo {
+  display: none;
+  text-align: center;
+}
+
+.bem-vindo h2 {
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.bem-vindo p {
+  color: #475569;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- LOGIN -->
+  <div id="login-page">
+    <h1>Login</h1>
+
+    <div class="input-group">
+      <label>Usuário</label>
+      <input type="text" id="usuario">
+    </div>
+
+    <div class="input-group">
+      <label>Senha</label>
+      <input type="password" id="senha">
+    </div>
+
+    <button onclick="entrar()">Entrar</button>
+
+    <div class="mensagem" id="mensagem"></div>
+  </div>
+
+  <!-- BEM VINDO -->
+  <div class="bem-vindo" id="home-page">
+    <h2 id="titulo-bemvindo"></h2>
+    <p>Você entrou no sistema com sucesso.</p>
+    <br>
+    <button onclick="voltar()">Sair</button>
+  </div>
+
+</div>
+
+<script>
+function entrar() {
+  const usuario = document.getElementById("usuario").value;
+  const senha = document.getElementById("senha").value;
+  const mensagem = document.getElementById("mensagem");
+
+  // Se quiser permitir até campos vazios, pode remover esse if
+  if (usuario === "" || senha === "") {
+    mensagem.textContent = "Digite qualquer coisa para entrar.";
+    return;
+  }
+
+  // Sempre entra, independente do que foi digitado
+  document.getElementById("login-page").style.display = "none";
+  document.getElementById("home-page").style.display = "block";
+
+  document.getElementById("titulo-bemvindo").textContent =
+    "Seja bem-vindo, " + usuario + "!";
+}
+
+function voltar() {
+  document.getElementById("login-page").style.display = "block";
+  document.getElementById("home-page").style.display = "none";
+
+  document.getElementById("usuario").value = "";
+  document.getElementById("senha").value = "";
+  document.getElementById("mensagem").textContent = "";
+}
+</script>
+
+</body>
+</html>
