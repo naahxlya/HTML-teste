@@ -9,7 +9,7 @@
 <body>
 
   <main class="container">
-    <h2 id="boasVindas"></h2>
+    <h2 class="label" id="boasVindas"></h2>
     <br>
     <h1>Calculadora de Juros Compostos</h1>
 
@@ -40,3 +40,14 @@
   <script src="/public/script/script.js"></script>
 </body>
 </html>
+
+<script>
+const usuario = localStorage.getItem("usuario");
+
+if (!usuario) {
+  window.location.href = "login.html";
+} else {
+  document.getElementById("boasVindas").textContent =
+    "Seja bem-vindo, " + usuario + "!";
+}
+</script>
