@@ -86,41 +86,42 @@ button:hover {
 
 <body>
 
-<div class="container">
-  <h1>Login</h1>
+  <form class="container" onsubmit="entrar(event)">
+    <div class="container">
+      <h1>Login</h1>
 
-  <div class="input-group">
-    <label>Usuário</label>
-    <input type="text" id="usuario">
-  </div>
+      <div class="input-group">
+        <label>Usuário</label>
+        <input type="text" id="usuario">
+      </div>
 
-  <div class="input-group">
-    <label>Senha</label>
-    <input type="password" id="senha">
-  </div>
+      <div class="input-group">
+        <label>Senha</label>
+        <input type="password" id="senha">
+      </div>
 
-  <button onclick="entrar()">Entrar</button>
+      <button type="submit">Entrar</button>
 
-  <div class="mensagem" id="mensagem"></div>
-</div>
+      <div class="mensagem" id="mensagem"></div>
+    </div>
+  </form>
 
 <script>
-function entrar() {
-  const usuario = document.getElementById("usuario").value;
-  const senha = document.getElementById("senha").value;
-  const mensagem = document.getElementById("mensagem");
+  function entrar(event) {
+    event.preventDefault(); // Impede recarregar a página
 
-  if (usuario === "" || senha === "") {
-    mensagem.textContent = "Digite seu nome e senha para entrar.";
-    return;
+    const usuario = document.getElementById("usuario").value;
+    const senha = document.getElementById("senha").value;
+    const mensagem = document.getElementById("mensagem");
+
+    if (usuario === "" || senha === "") {
+      mensagem.textContent = "Digite seu usuário e senha para entrar.";
+      return;
+    }
+
+    localStorage.setItem("usuario", usuario);
+    window.location.href = "index.html";
   }
-
-  // Salva o nome para usar na calculadora
-  localStorage.setItem("usuario", usuario);
-
-  // Redireciona para index.html (mesma pasta)
-  window.location.href = "index.html";
-}
 </script>
 
 </body>
