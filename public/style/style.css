@@ -189,3 +189,20 @@ button:hover {
 .top-buttons a:hover {
   background: #059669;
 }
+
+.btn-usuario{
+position:fixed;
+top:20px;
+left:20px;
+background:#10b981;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.btn-usuario:hover{
+background:#059669;
+}

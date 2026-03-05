@@ -39,3 +39,7 @@ function sair() {
 function irParaAporte() {
   window.location.href = "aporte.html";
 }
+
+function irPerfil(){
+window.location.href="usuario.html"
+}

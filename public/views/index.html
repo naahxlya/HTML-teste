@@ -9,6 +9,10 @@
 <body>
   
   <div class="top-buttons">
+    <a class="btn-usuario" onclick="irPerfil()">Perfil</a>
+  </div>
+
+  <div class="top-buttons">
     <a href="simples.html">Juros Simples</a>
     <a href="relatorio.html">Ver Relatório</a>
   </div>
@@ -64,5 +68,9 @@ if (!usuario) {
 } else {
   document.getElementById("boasVindas").textContent =
     "Seja bem-vindo, " + usuario + "!";
+}
+
+function irPerfil(){
+window.location.href="usuario.html"
 }
 </script>

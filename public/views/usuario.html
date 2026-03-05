@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil do Usuário</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.container{
+background:#fff;
+padding:30px;
+border-radius:12px;
+width:100%;
+max-width:700px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+color:#1e293b;
+}
+
+.perfil{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:25px;
+}
+
+.perfil input{
+padding:8px;
+border-radius:6px;
+border:1px solid #cbd5e1;
+}
+
+.botoes{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+button{
+padding:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.salvar{
+background:#3b82f6;
+color:white;
+}
+
+.salvar:hover{
+background:#2563eb;
+}
+
+.voltar{
+background:#64748b;
+color:white;
+}
+
+.voltar:hover{
+background:#475569;
+}
+
+h2{
+margin-bottom:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:8px;
+text-align:center;
+border-bottom:1px solid #e2e8f0;
+}
+
+th{
+background:#f1f5f9;
+}
+
+.vazio{
+text-align:center;
+padding:15px;
+color:#64748b;
+}
+
+.limpar-historico{
+
+background:#ef4444;
+color:white;
+border:none;
+padding:10px;
+border-radius:6px;
+margin-top:15px;
+cursor:pointer;
+font-weight:bold;
+transition:0.2s;
+
+}
+
+.limpar-historico:hover{
+
+background:#dc2626;
+
+}
+
+</style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Perfil do Usuário</h1>
+    <div class="perfil">
+
+    <input id="nome" placeholder="Nome">
+    <input id="email" placeholder="Email">
+    <input id="telefone" placeholder="Telefone">
+
+    </div>
+
+    <div class="botoes">
+
+    <button class="salvar" onclick="salvarPerfil()">Salvar Perfil</button>
+    <button class="voltar" onclick="voltar()">Voltar</button>
+
+    </div>
+
+    <h2>Histórico de Relatórios</h2>
+    <ul id="historicoRelatorios"></ul>
+
+    <table id="tabelaHistorico">
+
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Investido</th>
+            <th>Montante</th>
+            <th>Juros</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+<div id="mensagem" class="vazio"></div>
+
+<button class="limpar-historico" onclick="limparHistorico()">
+    Limpar Histórico
+</button>
+
+</div>
+
+<script>
+
+function voltar(){
+window.location.href="index.html"
+}
+
+function salvarPerfil(){
+
+const nome=document.getElementById("nome").value
+const email=document.getElementById("email").value
+const telefone=document.getElementById("telefone").value
+
+const perfil={
+nome,
+email,
+telefone
+}
+
+localStorage.setItem("perfilUsuario",JSON.stringify(perfil))
+
+alert("Perfil salvo")
+
+}
+
+function carregarPerfil(){
+
+const perfil=JSON.parse(localStorage.getItem("perfilUsuario"))
+
+if(!perfil)return
+
+document.getElementById("nome").value=perfil.nome || ""
+document.getElementById("email").value=perfil.email || ""
+document.getElementById("telefone").value=perfil.telefone || ""
+
+}
+
+function carregarHistorico(){
+
+const historico=JSON.parse(localStorage.getItem("historicoRelatorios")) || []
+
+const tbody=document.querySelector("#tabelaHistorico tbody")
+const mensagem=document.getElementById("mensagem")
+
+tbody.innerHTML=""
+
+if(historico.length===0){
+
+mensagem.innerText="Nenhum relatório gerado ainda."
+return
+
+}
+
+mensagem.innerText=""
+
+historico.forEach(item=>{
+
+const linha=`
+<tr>
+<td>${item.data}</td>
+<td>${item.investido}</td>
+<td>${item.montante}</td>
+<td>${item.juros}</td>
+</tr>
+`
+
+tbody.innerHTML+=linha
+
+})
+
+}
+
+carregarPerfil()
+carregarHistorico()
+
+function limparHistorico(){
+localStorage.removeItem("historicoRelatorios")
+location.reload()
+}
+
+</script>
+
+<script>
+    function limparHistorico(){
+
+    const confirmar = confirm("Deseja realmente apagar todo o histórico?")
+
+    if(!confirmar)return
+
+    localStorage.removeItem("historicoRelatorios")
+
+    location.reload()
+
+    }
+</script>
+
+</body>
+</html>
