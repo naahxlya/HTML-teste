@@ -87,6 +87,23 @@ button:hover {
 .resultado strong {
   color: #1e293b;
 }
+
+.btn-voltar {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: #64748b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn-voltar:hover {
+  background: #475569;
+}
 </style>
 </head>
 
@@ -118,6 +135,10 @@ button:hover {
   <button onclick="calcular()">Calcular</button>
 
   <div class="resultado" id="resultado"></div>
+
+  <button class="btn-voltar" onclick="voltarIndex()">
+    Voltar para Calculadora Principal
+  </button>
 </div>
 
 <script>
@@ -151,6 +172,10 @@ function calcular() {
     <p><strong>Montante Final:</strong> ${formato.format(montante)}</p>
     <p><strong>Juros Ganhos:</strong> ${formato.format(juros)}</p>
   `;
+}
+
+function voltarIndex() {
+  window.location.href = "index.html";
 }
 </script>
 
