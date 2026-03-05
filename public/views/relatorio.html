@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Evolução</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn-calcular {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-calcular:hover {
+  background: #2563eb;
+}
+
+.btn-voltar {
+  background: #64748b;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.btn-voltar:hover {
+  background: #475569;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background: #f1f5f9;
+}
+
+.resumo {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<button class="btn-voltar" onclick="voltar()">← Voltar</button>
+
+<h1>Relatório de Evolução Mensal</h1>
+
+<div class="form">
+  <input type="number" id="capital" placeholder="Capital Inicial">
+  <input type="number" id="aporte" placeholder="Aporte Mensal">
+  <input type="number" id="taxa" placeholder="Taxa (%) ao mês" step="0.01">
+  <input type="number" id="tempo" placeholder="Tempo (meses)">
+  <button class="btn-calcular" onclick="gerarRelatorio()">Gerar Relatório</button>
+</div>
+
+<table id="tabela" style="display:none;">
+  <thead>
+    <tr>
+      <th>Mês</th>
+      <th>Valor no Início</th>
+      <th>Juros do Mês</th>
+      <th>Valor Final</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div class="resumo" id="resumo"></div>
+
+</div>
+
+<script>
+function voltar() {
+  window.location.href = "index.html";
+}
+
+function gerarRelatorio() {
+  const capitalInicial = parseFloat(document.getElementById("capital").value) || 0;
+  const aporte = parseFloat(document.getElementById("aporte").value) || 0;
+  const taxa = (parseFloat(document.getElementById("taxa").value) || 0) / 100;
+  const tempo = parseInt(document.getElementById("tempo").value) || 0;
+
+  if (taxa === 0 || tempo === 0) {
+    alert("Preencha taxa e tempo corretamente.");
+    return;
+  }
+
+  const tabela = document.getElementById("tabela");
+  const tbody = tabela.querySelector("tbody");
+  const resumo = document.getElementById("resumo");
+
+  tbody.innerHTML = "";
+  tabela.style.display = "table";
+
+  let saldo = capitalInicial;
+  let totalInvestido = capitalInicial;
+
+  const formato = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+
+  for (let mes = 1; mes <= tempo; mes++) {
+    const inicioMes = saldo;
+    const juros = inicioMes * taxa;
+    saldo = inicioMes + juros + aporte;
+    totalInvestido += aporte;
+
+    const linha = `
+      <tr>
+        <td>${mes}</td>
+        <td>${formato.format(inicioMes)}</td>
+        <td>${formato.format(juros)}</td>
+        <td>${formato.format(saldo)}</td>
+      </tr>
+    `;
+    tbody.innerHTML += linha;
+  }
+
+  const jurosTotais = saldo - totalInvestido;
+
+  resumo.innerHTML = `
+    <p><strong>Total Investido:</strong> ${formato.format(totalInvestido)}</p>
+    <p><strong>Montante Final:</strong> ${formato.format(saldo)}</p>
+    <p><strong>Juros Totais:</strong> ${formato.format(jurosTotais)}</p>
+  `;
+}
+</script>
+
+</body>
+</html>
