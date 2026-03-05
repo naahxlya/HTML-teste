@@ -35,3 +35,7 @@ function sair() {
   // Redireciona para login
   window.location.href = "login.html";
 };
+
+function irParaAporte() {
+  window.location.href = "aporte.html";
+}
